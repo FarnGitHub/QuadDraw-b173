@@ -10,10 +10,7 @@ import net.modificationstation.stationapi.api.util.math.Vec3f;
 import net.modificationstation.stationapi.api.util.math.Vec4f;
 import net.modificationstation.stationapi.impl.client.render.StationTessellatorImpl;
 import net.modificationstation.stationapi.mixin.render.client.TessellatorAccessor;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Pseudo;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 
 @Pseudo
 @Mixin(StationTessellatorImpl.class)
@@ -83,7 +80,7 @@ public abstract class ArsenicTessellatorMixin {
         boolean colorEnabled = !access.getColorDisabled();
         self.normal(normalX, normalY, normalZ);
 
-        if (colorEnabled) self.color(colour0);
+        if (colorEnabled) quadDraw_AbgrColor(colour0);
         self.vertex(
                 (Float.intBitsToFloat(fastVertexData[0]) + x),
                 (Float.intBitsToFloat(fastVertexData[1]) + y),
@@ -91,7 +88,7 @@ public abstract class ArsenicTessellatorMixin {
                 u1, v1
         );
 
-        if (colorEnabled) self.color(colour1);
+        if (colorEnabled) quadDraw_AbgrColor(colour1);
         self.vertex(
                 (Float.intBitsToFloat(fastVertexData[8]) + x),
                 (Float.intBitsToFloat(fastVertexData[9]) + y),
@@ -99,7 +96,7 @@ public abstract class ArsenicTessellatorMixin {
                 u2, v2
         );
 
-        if (colorEnabled) self.color(colour2);
+        if (colorEnabled) quadDraw_AbgrColor(colour2);
         self.vertex(
                 (Float.intBitsToFloat(fastVertexData[16]) + x),
                 (Float.intBitsToFloat(fastVertexData[17]) + y),
@@ -107,12 +104,21 @@ public abstract class ArsenicTessellatorMixin {
                 u3, v3
         );
 
-        if (colorEnabled) self.color(colour3);
+        if (colorEnabled) quadDraw_AbgrColor(colour3);
         self.vertex(
                 (Float.intBitsToFloat(fastVertexData[24]) + x),
                 (Float.intBitsToFloat(fastVertexData[25]) + y),
                 (Float.intBitsToFloat(fastVertexData[26]) + z),
                 u4, v4
         );
+    }
+
+    @Unique
+    private void quadDraw_AbgrColor(int color) {
+        int a = (color >> 24) & 255;
+        int b = (color >> 16) & 255;
+        int g = (color >> 8) & 255;
+        int r = color & 255;
+        self.color(r,g,b,a);
     }
 }
