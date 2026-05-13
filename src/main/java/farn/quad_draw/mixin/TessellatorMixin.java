@@ -13,6 +13,7 @@ public class TessellatorMixin {
     @Shadow
     private static boolean TRIANGLE_MODE;
 
+    //make minecraft directly use GL_QUADS instead of converting on it own
     @Inject(method="<clinit>", at = @At("TAIL"))
     private static void quad_draw_changeTMtoFalse(CallbackInfo ci) {
         TRIANGLE_MODE = false;

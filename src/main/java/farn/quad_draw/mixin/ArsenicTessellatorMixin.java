@@ -35,8 +35,9 @@ public abstract class ArsenicTessellatorMixin {
     @Final
     private Tessellator self;
 
+    //Fix the fourth triangle being render as quad
     @WrapMethod(method="quad")
-    public void test(BakedQuad quad, float x, float y, float z, int colour0, int colour1, int colour2, int colour3, float normalX, float normalY, float normalZ, boolean spreadUV, Operation<Void> original) {
+    public void quadDraw_fixStationAPIRender(BakedQuad quad, float x, float y, float z, int colour0, int colour1, int colour2, int colour3, float normalX, float normalY, float normalZ, boolean spreadUV, Operation<Void> original) {
         System.arraycopy(quad.getVertexData(), 0, fastVertexData, 0, 32);
         float u1 = Float.intBitsToFloat(fastVertexData[3]);
         float v1 = Float.intBitsToFloat(fastVertexData[4]);
@@ -79,20 +80,39 @@ public abstract class ArsenicTessellatorMixin {
             u4 = -damageUV.getX();
             v4 = -damageUV.getY();
         }
+        boolean colorEnabled = !access.getColorDisabled();
         self.normal(normalX, normalY, normalZ);
 
-        if (!access.getColorDisabled()) self.color(colour0);
-        self.vertex((Float.intBitsToFloat(fastVertexData[0]) + x), (Float.intBitsToFloat(fastVertexData[1]) + y), (Float.intBitsToFloat(fastVertexData[2]) + z), u1, v1);
+        if (colorEnabled) self.color(colour0);
+        self.vertex(
+                (Float.intBitsToFloat(fastVertexData[0]) + x),
+                (Float.intBitsToFloat(fastVertexData[1]) + y),
+                (Float.intBitsToFloat(fastVertexData[2]) + z),
+                u1, v1
+        );
 
-        if (!access.getColorDisabled()) self.color(colour1);
-        self.vertex((Float.intBitsToFloat(fastVertexData[8]) + x), (Float.intBitsToFloat(fastVertexData[9]) + y), (Float.intBitsToFloat(fastVertexData[10]) + z), u2, v2);
+        if (colorEnabled) self.color(colour1);
+        self.vertex(
+                (Float.intBitsToFloat(fastVertexData[8]) + x),
+                (Float.intBitsToFloat(fastVertexData[9]) + y),
+                (Float.intBitsToFloat(fastVertexData[10]) + z),
+                u2, v2
+        );
 
-        if (!access.getColorDisabled()) self.color(colour2);
-        if(spreadUV) self.texture(u3, v3);
-        self.vertex((Float.intBitsToFloat(fastVertexData[16]) + x), (Float.intBitsToFloat(fastVertexData[17]) + y), (Float.intBitsToFloat(fastVertexData[18]) + z), u3, v3);
+        if (colorEnabled) self.color(colour2);
+        self.vertex(
+                (Float.intBitsToFloat(fastVertexData[16]) + x),
+                (Float.intBitsToFloat(fastVertexData[17]) + y),
+                (Float.intBitsToFloat(fastVertexData[18]) + z),
+                u3, v3
+        );
 
-        if (!access.getColorDisabled()) self.color(colour3);
-        if(spreadUV) self.texture(u4, v4);
-        self.vertex((Float.intBitsToFloat(fastVertexData[24]) + x), (Float.intBitsToFloat(fastVertexData[25]) + y), (Float.intBitsToFloat(fastVertexData[26]) + z), u4, v4);
+        if (colorEnabled) self.color(colour3);
+        self.vertex(
+                (Float.intBitsToFloat(fastVertexData[24]) + x),
+                (Float.intBitsToFloat(fastVertexData[25]) + y),
+                (Float.intBitsToFloat(fastVertexData[26]) + z),
+                u4, v4
+        );
     }
 }

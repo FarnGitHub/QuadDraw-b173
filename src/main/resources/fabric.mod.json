@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "bad_fix",
+  "id": "quad_draw",
   "version": "${version}",
   "name": "Quad draw",
   "description": "Make the game use quad to draw to fix bugged entity shading in gl4es",
