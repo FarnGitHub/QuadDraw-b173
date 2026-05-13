@@ -12,8 +12,10 @@ import net.modificationstation.stationapi.impl.client.render.StationTessellatorI
 import net.modificationstation.stationapi.mixin.render.client.TessellatorAccessor;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Shadow;
 
+@Pseudo
 @Mixin(StationTessellatorImpl.class)
 public abstract class ArsenicTessellatorMixin {
 
