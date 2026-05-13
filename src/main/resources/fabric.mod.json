@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "bad_fix",
+  "version": "${version}",
+  "name": "Quad draw",
+  "description": "Make the game use quad to draw to fix bugged entity shading in gl4es",
+  "authors": [
+    "farnfarn02"
+  ],
+  "license": "MIT",
+  "environment": "client",
+  "mixins": [
+    "quad_draw.mixins.json"
+  ],
+  "depends": {
+    "minecraft": "1.0.0-beta.7.3"
+  }
+}

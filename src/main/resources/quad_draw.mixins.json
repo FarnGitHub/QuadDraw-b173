@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "farn.quad_draw.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "TessellatorMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
